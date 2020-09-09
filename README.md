@@ -13,15 +13,13 @@ on: [pull_request]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@master
-    - uses: mydea/actions-ember-testing@v1
-    - name: Install dependencies
+      uses: actions/checkout@v1
+      uses: volta-cli/action@v1
+      name: Install dependencies
       run: yarn install
-    - uses: mydea/ember-cli-code-coverage-action@v1
+      uses: mydea/ember-cli-code-coverage-action@v1
       with:
         repo-token: "${{ secrets.GITHUB_TOKEN }}"
 ```
@@ -45,6 +43,14 @@ Token to post statuses and comments on yore repo. Note that the `GITHUB_TOKEN` s
 The command to run your tests.
 Either you add something like this: `"test-coverage": "COVERAGE=true ember test"` to your package.json file, or you can specify a custom test command.
 
+### Example usage
+
+```yaml
+uses: mydea/ember-cli-code-coverage-action@v1
+with:
+  repo-token: "${{ secrets.GITHUB_TOKEN }}"
+  test-command: "yarn test:ember:coverage"
+```
 -------------------
 
 **`coverage-file`** *optional*
