@@ -15,13 +15,16 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      uses: actions/checkout@v1
-      uses: volta-cli/action@v1
-      name: Install dependencies
-      run: yarn install
-      uses: mydea/ember-cli-code-coverage-action@v1
-      with:
-        repo-token: "${{ secrets.GITHUB_TOKEN }}"
+      - name: Checkout repo
+        uses: actions/checkout@v1
+      - name: Install volta
+        uses: volta-cli/action@v1
+      - name: Install dependencies
+        run: yarn install
+      - name: Compare code coverage
+        uses: mydea/ember-cli-code-coverage-action@v1
+        with:
+          repo-token: "${{ secrets.GITHUB_TOKEN }}"
 ```
 
 Note that the `GITHUB_TOKEN` secret is automatically available, so you don't need to do anything else about that.
@@ -46,10 +49,12 @@ Either you add something like this: `"test-coverage": "COVERAGE=true ember test"
 ### Example usage
 
 ```yaml
-uses: mydea/ember-cli-code-coverage-action@v1
-with:
-  repo-token: "${{ secrets.GITHUB_TOKEN }}"
-  test-command: "yarn test:ember:coverage"
+[...]
+- name: Compare code coverage
+  uses: mydea/ember-cli-code-coverage-action@v1
+  with:
+    repo-token: "${{ secrets.GITHUB_TOKEN }}"
+    test-command: "yarn test:ember:coverage"
 ```
 -------------------
 
